@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: CamundaBoot
+Implementation-Version: 1.0
+Built-By: PRITAM NATH
+Implementation-Vendor-Id: org.springframework.boot
+Build-Jdk: 1.8.0_181
+Implementation-URL: http://projects.spring.io/spring-boot/CamundaBoot/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

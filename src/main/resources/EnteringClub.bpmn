@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" id="sid-0b0aaa25-3baf-4875-9d7a-0907d599a9ef" targetNamespace="http://camunda.org/examples" exporter="Camunda Modeler" exporterVersion="3.3.4" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <process id="customerDataProcess" name="Customer Data Process" isExecutable="true">
+    <startEvent id="StartEvent_1" camunda:formKey="embedded:app:forms/start-form.html">
+      <outgoing>SequenceFlow_1</outgoing>
+    </startEvent>
+    <sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1" />
+    <userTask id="UserTask_1" name="Is the customer over age of 21?" camunda:formKey="embedded:app/TaskForm.jsp" camunda:assignee="demo">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="answer" label="yes" type="boolean" />
+        </camunda:formData>
+      </extensionElements>
+      <incoming>SequenceFlow_1</incoming>
+      <outgoing>SequenceFlow_3</outgoing>
+    </userTask>
+    <exclusiveGateway id="ExclusiveGateway_1">
+      <incoming>SequenceFlow_3</incoming>
+      <outgoing>SequenceFlow_4</outgoing>
+      <outgoing>SequenceFlow_5</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="SequenceFlow_3" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1" />
+    <sequenceFlow id="SequenceFlow_4" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2">
+      <conditionExpression xsi:type="tFormalExpression">${answer == true}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_5" name="" sourceRef="ExclusiveGateway_1" targetRef="UserTask_3">
+      <conditionExpression xsi:type="tFormalExpression">${answer==false}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="UserTask_3" name="Reject?" camunda:formKey="embedded:app/TaskForm.jsp" camunda:assignee="demo">
+      <incoming>SequenceFlow_5</incoming>
+      <outgoing>SequenceFlow_7</outgoing>
+    </userTask>
+    <userTask id="UserTask_2" name="Approve?" camunda:formKey="embedded:app/TaskForm.jsp" camunda:assignee="demo">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="answer" type="boolean" />
+        </camunda:formData>
+      </extensionElements>
+      <incoming>SequenceFlow_4</incoming>
+      <outgoing>SequenceFlow_6</outgoing>
+    </userTask>
+    <endEvent id="EndEvent_2">
+      <incoming>SequenceFlow_079dpmu</incoming>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow_6" name="" sourceRef="UserTask_2" targetRef="UserTask_1lbmyku" />
+    <endEvent id="EndEvent_3">
+      <incoming>SequenceFlow_7</incoming>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow_7" name="" sourceRef="UserTask_3" targetRef="EndEvent_3" />
+    <userTask id="UserTask_1lbmyku" name="Have you finished it?" camunda:formKey="embedded:app/TaskForm.jsp" camunda:assignee="demo">
+      <extensionElements>
+        <camunda:formData>
+          <camunda:formField id="answer" type="boolean" />
+        </camunda:formData>
+      </extensionElements>
+      <incoming>SequenceFlow_6</incoming>
+      <outgoing>SequenceFlow_079dpmu</outgoing>
+    </userTask>
+    <sequenceFlow id="SequenceFlow_079dpmu" sourceRef="UserTask_1lbmyku" targetRef="EndEvent_2" />
+  </process>
+  <bpmndi:BPMNDiagram id="_BPMNDiagram_3">
+    <bpmndi:BPMNPlane id="_BPMNPlane_3" bpmnElement="customerDataProcess">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_4" bpmnElement="StartEvent_1">
+        <omgdc:Bounds x="154" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="222" y="233" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="UserTask_1">
+        <omgdc:Bounds x="250" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_4" targetElement="_BPMNShape_UserTask_2">
+        <omgdi:waypoint x="190" y="210" />
+        <omgdi:waypoint x="250" y="210" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="262" y="210" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <omgdc:Bounds x="400" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_UserTask_2" targetElement="_BPMNShape_ExclusiveGateway_2">
+        <omgdi:waypoint x="350" y="210" />
+        <omgdi:waypoint x="400" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_3" bpmnElement="UserTask_2">
+        <omgdc:Bounds x="502" y="91" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_UserTask_3">
+        <omgdi:waypoint x="425" y="185" />
+        <omgdi:waypoint x="425" y="131" />
+        <omgdi:waypoint x="502" y="131" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="472" y="160" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_4" bpmnElement="UserTask_3">
+        <omgdc:Bounds x="502" y="249" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_UserTask_4">
+        <omgdi:waypoint x="425" y="235" />
+        <omgdi:waypoint x="425" y="289" />
+        <omgdi:waypoint x="476" y="289" />
+        <omgdi:waypoint x="502" y="289" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="472" y="260" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_2">
+        <omgdc:Bounds x="802" y="113" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_UserTask_3" targetElement="UserTask_1lbmyku_di">
+        <omgdi:waypoint x="602" y="131" />
+        <omgdi:waypoint x="640" y="131" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_3">
+        <omgdc:Bounds x="652" y="271" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_UserTask_4" targetElement="_BPMNShape_EndEvent_4">
+        <omgdi:waypoint x="602" y="289" />
+        <omgdi:waypoint x="652" y="289" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1lbmyku_di" bpmnElement="UserTask_1lbmyku">
+        <omgdc:Bounds x="640" y="91" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_079dpmu_di" bpmnElement="SequenceFlow_079dpmu">
+        <omgdi:waypoint x="740" y="131" />
+        <omgdi:waypoint x="802" y="131" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
