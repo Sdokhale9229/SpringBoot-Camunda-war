@@ -10,7 +10,7 @@
 
 <form role="form" class="form-horizontal">
   <div class="control-group">
-    <label class="control-label">Is there electrical power to the unit?</label>
+    <label class="control-label">Is there electric power to the unit?</label>
     <div class="controls">
       <input type="text" class="form-control" 
         cam-variable-name="Status"
